@@ -1,0 +1,14 @@
+{
+  "name": "health",
+  "nodes": [
+    {
+      "type": "webhook",
+      "path": "/health",
+      "method": "GET"
+    },
+    {
+      "type": "respond",
+      "status": 200
+    }
+  ]
+}

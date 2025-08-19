@@ -1,0 +1,1 @@
+import { MongoClient } from 'mongodb'; let db; export async function getDb(){ if(db) return db; const c=new MongoClient(process.env.MONGODB_URI); await c.connect(); db=c.db(process.env.MONGODB_DB||'intake_service'); return db; }

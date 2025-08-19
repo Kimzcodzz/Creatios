@@ -1,0 +1,33 @@
+{
+  "name": "tradelines_intake",
+  "nodes": [
+    {
+      "type": "webhook",
+      "name": "Start",
+      "path": "/tradelines/intake",
+      "method": "POST"
+    },
+    {
+      "type": "if",
+      "name": "Validate",
+      "conditions": [
+        "email",
+        "consent"
+      ]
+    },
+    {
+      "type": "set",
+      "name": "Tag",
+      "values": {
+        "tags": [
+          "tradelines_lead"
+        ]
+      }
+    },
+    {
+      "type": "queue",
+      "name": "Queue",
+      "queue": "tradelines_process"
+    }
+  ]
+}

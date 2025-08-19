@@ -1,0 +1,33 @@
+{
+  "name": "lead_magnet_intake",
+  "nodes": [
+    {
+      "type": "webhook",
+      "name": "Start",
+      "path": "/lead_magnet/intake",
+      "method": "POST"
+    },
+    {
+      "type": "if",
+      "name": "Validate",
+      "conditions": [
+        "email",
+        "consent"
+      ]
+    },
+    {
+      "type": "set",
+      "name": "Tag",
+      "values": {
+        "tags": [
+          "lead_magnet_lead"
+        ]
+      }
+    },
+    {
+      "type": "queue",
+      "name": "Queue",
+      "queue": "lead_magnet_process"
+    }
+  ]
+}

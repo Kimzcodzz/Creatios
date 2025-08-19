@@ -1,0 +1,33 @@
+{
+  "name": "sports_betting_intake",
+  "nodes": [
+    {
+      "type": "webhook",
+      "name": "Start",
+      "path": "/sports_betting/intake",
+      "method": "POST"
+    },
+    {
+      "type": "if",
+      "name": "Validate",
+      "conditions": [
+        "email",
+        "consent"
+      ]
+    },
+    {
+      "type": "set",
+      "name": "Tag",
+      "values": {
+        "tags": [
+          "sports_betting_lead"
+        ]
+      }
+    },
+    {
+      "type": "queue",
+      "name": "Queue",
+      "queue": "sports_betting_process"
+    }
+  ]
+}

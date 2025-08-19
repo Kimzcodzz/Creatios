@@ -1,0 +1,6 @@
+import { createContext, useContext, useEffect, useState } from 'react'; import tokens from '../../themes/tokens.json';
+const def=process.env.NEXT_PUBLIC_DEFAULT_THEME||'Default'; const C=createContext();
+export const ThemeProvider=({children})=>{ const initial=tokens.skins.find(s=>s.name===def)||tokens.skins[0]; const [skin,setSkin]=useState(initial);
+useEffect(()=>{ const s=skin; if(!s) return; document.documentElement.style.setProperty('--primary', s.primary); document.documentElement.style.setProperty('--secondary', s.secondary); document.documentElement.style.setProperty('--radius', s.radius); document.documentElement.style.setProperty('--font', s.font); document.body.style.fontFamily=s.font; },[skin]);
+useEffect(()=>{(async()=>{ try{ const r=await fetch('/api/settings'); if(r.ok){const d=await r.json(); const f=tokens.skins.find(s=>s.name===d?.defaultTheme); if(f) setSkin(f);} }catch{}})();},[]);
+return <C.Provider value={{skin,setSkin,skins:tokens.skins}}>{children}</C.Provider>; }; export const useTheme=()=>useContext(C);

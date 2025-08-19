@@ -1,0 +1,1 @@
+import { LocaleProvider } from '../src/contexts/LocaleContext'; import { ThemeProvider } from '../src/contexts/ThemeContext'; import '../styles/globals.css'; export default function App({Component,pageProps}){return(<ThemeProvider><LocaleProvider><Component {...pageProps} /></LocaleProvider></ThemeProvider>);}

@@ -1,0 +1,4 @@
+ID,Epic,Swimlane,Task,Acceptance Criteria
+CORE-01,Core,DevOps,Cloudflare proxied DNS,Blue/green swap <60s
+TAX-01,Tax,Data,8879 flow wire,OTP + WORM stored
+INS-01,Insurance,Data,Quote schema,Consent logged

@@ -1,0 +1,33 @@
+{
+  "name": "tax_intake",
+  "nodes": [
+    {
+      "type": "webhook",
+      "name": "Start",
+      "path": "/tax/intake",
+      "method": "POST"
+    },
+    {
+      "type": "if",
+      "name": "Validate",
+      "conditions": [
+        "email",
+        "consent"
+      ]
+    },
+    {
+      "type": "set",
+      "name": "Tag",
+      "values": {
+        "tags": [
+          "tax_lead"
+        ]
+      }
+    },
+    {
+      "type": "queue",
+      "name": "Queue",
+      "queue": "tax_process"
+    }
+  ]
+}

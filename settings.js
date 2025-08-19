@@ -1,0 +1,9 @@
+import { useState, useEffect } from 'react'; import { useLocale } from '../src/contexts/LocaleContext'; import { useTheme } from '../src/contexts/ThemeContext';
+export default function Settings(){ const {lang,setLang}=useLocale(); const {skin,setSkin,skins}=useTheme(); const [saving,setSaving]=useState(false);
+useEffect(()=>{(async()=>{const r=await fetch('/api/settings'); if(r.ok){const d=await r.json(); if(d?.defaultLang) setLang(d.defaultLang); if(d?.defaultTheme){const f=skins.find(s=>s.name===d.defaultTheme); if(f) setSkin(f);}}})()},[]);
+async function save(){ setSaving(true); await fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({defaultLang:lang,defaultTheme:skin.name})}); setSaving(false); alert('Saved!'); }
+return (<div className="p-6 max-w-xl mx-auto"><h1 className="text-2xl font-bold mb-4">Dashboard Settings</h1>
+<label className="block mb-2">Default Language</label><select className="border p-2 rounded w-full mb-4" value={lang} onChange={e=>setLang(e.target.value)}><option value='en'>English</option><option value='es'>Español</option><option value='fr'>Français</option><option value='pt'>Português</option><option value='ar'>العربية</option></select>
+<label className="block mb-2">Default Theme</label><select className="border p-2 rounded w-full mb-6" value={skin.name} onChange={e=>setSkin(skins.find(s=>s.name===e.target.value))}>{skins.map(s=>(<option key={s.name} value={s.name}>{s.name}</option>))}</select>
+<button onClick={save} disabled={saving} className="bg-blue-600 text-white px-4 py-2 rounded">{saving?'Saving...':'Save Settings'}</button></div>);}
+export async function getServerSideProps({req}){ const {verifyNextRequest}=await import('../src/auth.js'); const u=verifyNextRequest(req); if(!u||u.role!=='admin'){return{redirect:{destination:'/login',permanent:false}};} return{props:{}};}

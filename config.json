@@ -1,0 +1,5 @@
+{
+  "require_otp": true,
+  "email_attach": false,
+  "retention_years": 7
+}

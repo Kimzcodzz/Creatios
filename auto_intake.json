@@ -1,0 +1,33 @@
+{
+  "name": "auto_intake",
+  "nodes": [
+    {
+      "type": "webhook",
+      "name": "Start",
+      "path": "/auto/intake",
+      "method": "POST"
+    },
+    {
+      "type": "if",
+      "name": "Validate",
+      "conditions": [
+        "email",
+        "consent"
+      ]
+    },
+    {
+      "type": "set",
+      "name": "Tag",
+      "values": {
+        "tags": [
+          "auto_lead"
+        ]
+      }
+    },
+    {
+      "type": "queue",
+      "name": "Queue",
+      "queue": "auto_process"
+    }
+  ]
+}

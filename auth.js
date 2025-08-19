@@ -1,0 +1,1 @@
+import jwt from 'jsonwebtoken'; export function verifyNextRequest(req){ const h=req.headers?.cookie||''; const t=(h.split(';').map(s=>s.trim()).find(s=>s.startsWith('token='))||'').split('=')[1]; if(!t) return null; try{return jwt.verify(t, process.env.SESSION_SECRET);}catch(e){return null;} }
